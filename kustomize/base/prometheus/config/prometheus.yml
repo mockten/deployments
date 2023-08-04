@@ -1,0 +1,24 @@
+global:
+  scrape_interval:     60s
+  evaluation_interval: 60s
+
+scrape_configs:
+- job_name: 'prometheus'
+  tls_config:
+    ca_file: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
+  bearer_token_file: /var/run/secrets/kubernetes.io/serviceaccount/token
+  metrics_path: /metrics
+  scheme: http
+  static_configs:
+  - targets:
+    - dev-ecfront-svc.dev-mockten.svc.cluster.local:9100
+    - dev-ecpay-service.dev-mockten.svc.cluster.local:9100
+    - dev-nf-svc.dev-mockten.svc.cluster.local:9100
+    - dev-ranking-svc.dev-mockten.svc.cluster.local:9100
+    - dev-searchitem-svc.dev-mockten.svc.cluster.local:9100
+    - prod-ecfront-svc.prod-mockten.svc.cluster.local:9100
+    - prod-ecpay-service.prod-mockten.svc.cluster.local:9100
+    - prod-nf-svc.prod-mockten.svc.cluster.local:9100
+    - prod-ranking-svc.prod-mockten.svc.cluster.local:9100
+    - prod-searchitem-svc.prod-mockten.svc.cluster.local:9100
+    - localhost:9090

@@ -1,0 +1,41 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namePrefix: prod-
+namespace: production
+images:
+- name: gcr.io/go-portforio/ecfront
+  newTag: circle-ci
+replicas:
+- name: ecfront
+  count: 1
+
+resources:
+- ../../../base/ecfront
+
+generatorOptions:
+  disableNameSuffixHash: true
+configMapGenerator:
+- name: ecfront-cm
+  envs:
+  - config/ecfront.env
+
+patches:
+- path: ingress-patch.yaml
+  target:
+    kind: Ingress
+    name: mockten-ingress
+- path: service-patch.yaml
+  target:
+    kind: Service
+    name: ecfront
+- path: secret-patch.yaml
+  target:
+    kind: Secret
+    name: ecfront-secret
+- path: deploy-patch.yaml
+  target:
+    group: apps
+    version: v1
+    kind: Deployment
+    name: deploy

@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deploy
+spec:
+  selector:
+    matchLabels:
+      app: ranking
+  template:
+    metadata:
+      labels:
+        app: ranking
+    spec:
+      containers:
+      - name: ranking
+        image: gcr.io/go-portforio/ranking
+        env:
+          - name: REDIS_HOST
+            valueFrom:
+              secretKeyRef:
+                name: dev-common-secret
+                key: redis_host 
+        ports:
+        - containerPort: 50053
+        - containerPort: 9100
+          name: prometheus
+        resources:
+          limits:
+            cpu: 200m
+            memory: 200m
+          requests:
+            cpu: 100m
+            memory: 100m

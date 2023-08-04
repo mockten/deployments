@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deploy
+spec:
+  template:
+    spec:
+      containers:
+        - image: redis
+          name: redis
+          ports:
+            - containerPort: 6379
+              name: redis
+          volumeMounts:
+            - name: redis-persistent-storage
+              mountPath: /data
+          resources:
+            limits:
+              cpu: 200m
+              memory: 200m
+            requests:
+              cpu: 100m
+              memory: 100m
+      volumes:
+        - name: redis-persistent-storage
+          gcePersistentDisk:
+            pdName: dev-redis-disk
+            fsType: ext4

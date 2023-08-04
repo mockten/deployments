@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: svc
+spec:
+  type: ClusterIP
+  ports:
+  - protocol: TCP
+    name: app
+    port: 50051
+    targetPort: 50051
+  - protocol: TCP
+    name: nodeexporter
+    port: 9100
+    targetPort: 9100
+  selector:
+    app: searchitem

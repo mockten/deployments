@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: payexecution
+spec:
+  template:
+    metadata:
+      labels:
+        app: payexecution
+    spec:
+      containers:
+      - name: payexecution
+        image: gcr.io/go-portforio/consumer-test
+        env:
+        - name: SECRET_USER
+          valueFrom:
+            secretKeyRef:
+              name: dev-searchitem-secret
+              key: user
+        - name: SECRET_PASS
+          valueFrom:
+            secretKeyRef:
+              name: dev-searchitem-secret
+              key: pass
+        - name: SECRET_DB
+          valueFrom:
+            secretKeyRef:
+              name: dev-searchitem-secret
+              key: db
+        - name: SECRET_TABLE
+          valueFrom:
+            secretKeyRef:
+              name: dev-searchitem-secret
+              key: table
+        - name: pubKey
+          valueFrom:
+            configMapKeyRef:
+              name: payexecute-cm
+              key: stgPubKey
+        - name: secKey
+          valueFrom:
+            configMapKeyRef:
+              name: payexecute-cm
+              key: secStgKey

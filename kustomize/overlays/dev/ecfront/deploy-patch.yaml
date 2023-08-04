@@ -1,0 +1,13 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ecfront
+spec:
+  template:
+    spec:
+      volumes:
+        - name: cred
+          secret:
+            secretName: dev-common-secret
+            defaultMode: 256
+

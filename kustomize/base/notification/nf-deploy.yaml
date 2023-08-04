@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deploy
+spec:
+  selector:
+    matchLabels:
+      app: notification
+  template:
+    metadata:
+      labels:
+        app: notification
+    spec:
+      containers:
+      - name: notification
+        image: gcr.io/go-portforio/mockten-notification
+        env:
+          - name: OPERATION_ADDRESS
+            valueFrom:
+              secretKeyRef:
+                name: nf-secret
+                key: operator_address
+          - name: REDIS_HOST
+            valueFrom:
+              secretKeyRef:
+                name: dev-common-secret
+                key: redis_host_with_port
+          - name: SNS_API_KEY
+            valueFrom:
+              secretKeyRef:
+                name: nf-secret
+                key: sns_api_key
+          - name: SNS_URL
+            valueFrom:
+              secretKeyRef:
+                name: nf-secret
+                key: sns_api_url
+        ports:
+        - containerPort: 9100
+        resources:
+          limits:
+            cpu: 200m
+            memory: 200m
+          requests:
+            cpu: 100m
+            memory: 100m

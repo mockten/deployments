@@ -1,0 +1,16 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+- namespace.yaml
+- namespace-observer.yaml
+- ecfront
+- ecpay
+- notification
+- payexecution
+- ranking
+- searchitem 
+- redis
+- mysql
+- ../base/grafana
+- ../base/prometheus

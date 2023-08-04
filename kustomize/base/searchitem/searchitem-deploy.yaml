@@ -1,0 +1,51 @@
+apiVersion: apps/v1 #  for k8s versions before 1.9.0 use apps/v1beta2  and before 1.8.0 use extensions/v1beta1
+kind: Deployment
+metadata:
+  name: deploy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: searchitem
+  template:
+    metadata:
+      labels:
+        app: searchitem
+    spec:
+      containers:
+      - name: searchitem-app
+        image: gcr.io/go-portforio/search-item
+        ports:
+        - containerPort: 50051
+          name: apl
+        - containerPort: 9100
+          name: prometheus
+        command: ["./searchitem"]
+        env:
+        - name: SECRET_USER
+          valueFrom:
+            secretKeyRef:
+              name: dev-common-secret
+              key: db_user
+        - name: SECRET_PASS
+          valueFrom:
+            secretKeyRef:
+              name: dev-common-secret
+              key: db_pass
+        - name: SECRET_DB
+          valueFrom:
+            secretKeyRef:
+              name: dev-common-secret
+              key: db_host
+        - name: SECRET_TABLE
+          valueFrom:
+            secretKeyRef:
+              name: dev-common-secret
+              key: db_table
+        resources:
+          limits:
+            cpu: 200m
+            memory: 200m
+          requests:
+            cpu: 100m
+            memory: 100m

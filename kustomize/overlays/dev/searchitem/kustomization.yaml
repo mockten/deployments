@@ -1,0 +1,16 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namePrefix: dev-
+namespace: dev-mockten
+
+images:
+- name: gcr.io/go-portforio/search-item
+  newname: gcr.io/driven-rig-385015/searchitem
+  newTag: manually
+replicas:
+- name: deploy
+  count: 1
+
+resources:
+- ../../../base/searchitem
