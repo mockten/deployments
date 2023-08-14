@@ -6,8 +6,8 @@ namespace: dev-mockten
 
 images:
 - name: gcr.io/go-portforio/ranking
-  newname: gcr.io/driven-rig-385015/ranking
-  newTag: manually
+  newname: gcr.io/secret-node-394015/ranking
+  newTag: v0.0.1
 replicas:
 - name: deploy
   count: 1

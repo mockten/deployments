@@ -5,8 +5,8 @@ namePrefix: dev-
 namespace: dev-mockten
 images:
 - name: gcr.io/go-portforio/ecfront
-  newname: gcr.io/driven-rig-385015/ecfront
-  newTag: manually
+  newname: gcr.io/secret-node-394015/ecfront
+  newTag: v0.0.1
 replicas:
 - name: deploy
   count: 1

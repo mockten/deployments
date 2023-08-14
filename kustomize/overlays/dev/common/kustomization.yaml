@@ -11,4 +11,4 @@ patches:
 - path: secret-patch.yaml
   target:
     kind: Secret
-    name: secret
+    name: common-secret

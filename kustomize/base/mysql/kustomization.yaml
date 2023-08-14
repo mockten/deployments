@@ -7,5 +7,4 @@ namePrefix: mysql-
 
 resources:
 - mysql-deploy.yaml
-- mysql-secret.yaml
 - mysql-service.yaml

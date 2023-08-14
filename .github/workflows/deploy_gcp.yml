@@ -4,17 +4,60 @@ on:
   push:
     branches:
       - main
+      - initial
   pull_request:
     branches:
       - main
+  workflow_dispatch: {}
 
-defaults:
-  run:
-    working-directory: kustomize
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
+  dev_deploy:
+    if: ${{ github.event_name == 'push' || github.event_name == 'workflow_dispatch' }}
+    runs-on: ubuntu-22.04
+    defaults:
+      run:
+        working-directory: kustomize/
+
     steps:
-    - uses: actions/checkout@v3
-    
+    - name: Checkout the repository
+      uses: actions/checkout@v1
+    - name: GCP Authenticate
+      uses: 'google-github-actions/auth@v1'
+      with:
+        credentials_json: ${{ secrets.GCP_CREDENTIALS }}
+
+    - name: Setup GCloud
+      uses: 'google-github-actions/setup-gcloud@v1'
+      with:
+        version: '>= 363.0.0'
+
+    - name: Configure docker to use the gcloud cli
+      run: gcloud container clusters get-credentials mockten-k8s-cluster --region us-east1 --project ${{ secrets.GCP_PROJECT_ID }}
+
+    - name: rename secret value
+      run: |
+        sed -i s/_SERVICE_ACCOUNT_JSON_/${{ secrets.SERVICE_ACCOUNT_JSON }} base/common/common-secret.yaml
+        sed -i s/_GCS_SA_JSON_/${{ secrets.GCS_SA_JSON }} base/common/common-secret.yaml
+        sed -i s/_GCS_BUCKET_/${{ secrets.GCS_BUCKET }} base/ecfront/ecfront-secret.yaml
+        sed -i s/_GCS_BASE_BUCKET_/${{ secrets.GCS_BASE_BUCKET }} base/ecfront/ecfront-secret.yaml
+        sed -i s/_GOOGLE_APPLICATION_CRE_/${{ secrets.GOOGLE_APPLICATION_CRE }} base/ecfront/ecfront-secret.yaml
+        sed -i s/_OPERATION_ADDRESS_/${{ secrets.OPERATION_ADDRESS }} base/ecfront/ecfront-secret.yaml
+        sed -i s/_AUTH0_PROVIDE_URL_/${{ secrets.AUTH0_PROVIDE_URL }} base/ecfront/ecfront-secret.yaml
+        sed -i s/_AUTH0_CLIENT_ID_/${{ secrets.AUTH0_CLIENT_ID }} base/ecfront/ecfront-secret.yaml
+        sed -i s/_AUTH0_CLIENT_SECRET_/${{ secrets.AUTH0_CLIENT_SECRET }} base/ecfront/ecfront-secret.yaml
+        sed -i s/BucketNameSecret/${{ secrets.GCS_BUCKET }} base/ecfront/ecfront-secret.yaml
+        sed -i s/_SECRET_KEY_/${{ secrets.SECRET_KEY_STRING }} base/ecpay/ecpay-secret.yaml
+        sed -i s/_OPERATOR_ADDRESS_/${{ secrets.OPERATOR_ADDRESS }} base/notification/nf-secret.yaml
+        sed -i s/_SNS_API_KEY_/${{ secrets.SNS_API_KEY }} base/notification/nf-secret.yaml
+        sed -i s/_SNS_API_URL_/${{ secrets.SNS_API_URL }} base/notification/nf-secret.yaml
+        sed -i s/_SNS_API_URL_/${{ secrets.SNS_API_URL }} base/notification/nf-secret.yaml
+        sed -i s/_REDIS_HOST_WITH_PORT_/${{ secrets.DEV_REDIS_HOST_WITH_PORT }} overlays/dev/common/secret-patch.yaml
+        sed -i s/_REDIS_HOST_/${{ secrets.DEV_REDIS_HOST }} overlays/dev/common/secret-patch.yaml
+        sed -i s/_DB_HOST_/${{ secrets.DEV_DB_HOST }} overlays/dev/common/secret-patch.yaml
+        sed -i s/_DB_PASS_/${{ secrets.DEV_DB_PASS }} overlays/dev/common/secret-patch.yaml
+        sed -i s/_DB_TABLE_/${{ secrets.DEV_DB_TABLE }} overlays/dev/common/secret-patch.yaml
+        sed -i s/_DB_USER_/${{ secrets.DEV_DB_USER }} overlays/dev/common/secret-patch.yaml
+
+    - name: deploy
+      run: kubectl apply -k overlays/dev/

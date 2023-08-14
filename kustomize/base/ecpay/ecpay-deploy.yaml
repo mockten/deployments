@@ -23,27 +23,27 @@ spec:
           - name: RedisHost
             valueFrom:
               secretKeyRef:
-                name: dev-common-secret
+                name: common-secret
                 key: redis_host_with_port
           - name: MysqlIp
             valueFrom:
               secretKeyRef:
-                name: mysql-secret
+                name: common-secret
                 key: host
           - name: MysqlDB
             valueFrom:
               secretKeyRef:
-                name: mysql-secret
+                name: common-secret
                 key: db
           - name: MysqlPassword
             valueFrom:
               secretKeyRef:
-                name: mysql-secret
+                name: common-secret
                 key: password
           - name: MysqlUser
             valueFrom:
               secretKeyRef:
-                name: mysql-secret
+                name: common-secret
                 key: user
           - name: DbHost
             valueFrom:

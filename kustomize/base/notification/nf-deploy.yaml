@@ -23,7 +23,7 @@ spec:
           - name: REDIS_HOST
             valueFrom:
               secretKeyRef:
-                name: dev-common-secret
+                name: common-secret
                 key: redis_host_with_port
           - name: SNS_API_KEY
             valueFrom:

@@ -8,6 +8,4 @@ namePrefix: searchitem-
 
 resources:
 - searchitem-deploy.yaml
-- searchitem-secret.yaml
 - searchitem-service.yaml
-
