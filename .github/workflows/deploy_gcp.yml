@@ -36,9 +36,11 @@ jobs:
       run: gcloud container clusters get-credentials mockten-k8s-cluster --region us-east1 --project ${{ secrets.GCP_PROJECT_ID }}
 
     - name: rename secret value
+      env: 
+        SERVICE_ACCOUNT_JSON: ${{ secrets.SERVICE_ACCOUNT_JSON }}
       run: |
         sed --version &&\
-        sed -i -e "s|_SERVICE_ACCOUNT_JSON_|${{ secrets.SERVICE_ACCOUNT_JSON }}|g" base/common/common-secret.yaml &&\
+        sed -i -e "s|_SERVICE_ACCOUNT_JSON_|$SERVICE_ACCOUNT_JSON|g" base/common/common-secret.yaml &&\
         sed -i -e "s/_GCS_SA_JSON_/${{ secrets.GCS_SA_JSON }}/g" base/common/common-secret.yaml &&\
         sed -i "s/_GCS_BUCKET_/${{ secrets.GCS_BUCKET }}/g" base/ecfront/ecfront-secret.yaml &&\
         sed -i "s/_GCS_BASE_BUCKET_/${{ secrets.GCS_BASE_BUCKET }}/g" base/ecfront/ecfront-secret.yaml &&\
