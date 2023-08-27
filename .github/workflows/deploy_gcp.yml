@@ -61,6 +61,23 @@ jobs:
       run: |
         sed --version &&\
         sed -i -e "s|_SERVICE_ACCOUNT_JSON_|"$SERVICE_ACCOUNT_JSON"|g" base/common/common-secret.yaml &&\
-        sed -i "s/_GCS_BUCKET_/"$GCS_BUCKET"/g" base/ecfront/ecfront-secret.yaml
+        sed -i "s/_GCS_BUCKET_/"$GCS_BUCKET"/g" base/ecfront/ecfront-secret.yaml &&\
+        sed -i "s/_GCS_BASE_BUCKET_/"$GCS_BASE_BUCKET"/g" base/ecfront/ecfront-secret.yaml &&\
+        sed -i "s/_GOOGLE_APPLICATION_CRE_/"$GOOGLE_APPLICATION_CRE"/g" base/ecfront/ecfront-secret.yaml &&\
+        sed -i "s/_OPERATION_ADDRESS_/"$OPERATION_ADDRESS"/g" base/ecfront/ecfront-secret.yaml &&\
+        sed -i "s/_AUTH0_PROVIDE_URL_/"$AUTH0_PROVIDE_URL"/g" base/ecfront/ecfront-secret.yaml &&\
+        sed -i "s/_AUTH0_CLIENT_ID_/"$AUTH0_CLIENT_ID"/g" base/ecfront/ecfront-secret.yaml &&\
+        sed -i "s/_AUTH0_CLIENT_SECRET_/"$AUTH0_CLIENT_SECRET"/g" base/ecfront/ecfront-secret.yaml &&\
+        sed -i "s/BucketNameSecret/"$GCS_BUCKET"/g" base/ecfront/ecfront-secret.yaml &&\
+        sed -i "s/_SECRET_KEY_/"$SECRET_KEY_STRING"/g" base/ecpay/ecpay-secret.yaml &&\
+        sed -i "s/_OPERATOR_ADDRESS_/"$OPERATOR_ADDRESS"/g" base/notification/nf-secret.yaml &&\
+        sed -i "s/_SNS_API_KEY_/"$SNS_API_KEY"/g" base/notification/nf-secret.yaml &&\
+        sed -i "s/_SNS_API_URL_/"$SNS_API_URL"/g" base/notification/nf-secret.yaml &&\
+        sed -i "s/_REDIS_HOST_WITH_PORT_/"$DEV_REDIS_HOST_WITH_PORT"/g" overlays/dev/common/secret-patch.yaml &&\
+        sed -i "s/_REDIS_HOST_/"$DEV_REDIS_HOST"/g" overlays/dev/common/secret-patch.yaml &&\
+        sed -i "s/_DB_HOST_/"$DEV_DB_HOST"/g" overlays/dev/common/secret-patch.yaml &&\
+        sed -i "s/_DB_PASS_/"$DEV_DB_PASS"/g" overlays/dev/common/secret-patch.yaml &&\
+        sed -i "s/_DB_TABLE_/"$DEV_DB_TABLE"/g" overlays/dev/common/secret-patch.yaml &&\
+        sed -i "s/_DB_USER_/"$DEV_DB_USER"/g" overlays/dev/common/secret-patch.yaml
     - name: deploy
       run: kubectl apply -k overlays/dev/
