@@ -68,6 +68,10 @@ jobs:
         sed -i "s/_AUTH0_PROVIDE_URL_/"$AUTH0_PROVIDE_URL"/g" base/ecfront/ecfront-secret.yaml &&\
         sed -i "s/_AUTH0_CLIENT_ID_/"$AUTH0_CLIENT_ID"/g" base/ecfront/ecfront-secret.yaml &&\
         sed -i "s/_AUTH0_CLIENT_SECRET_/"$AUTH0_CLIENT_SECRET"/g" base/ecfront/ecfront-secret.yaml &&\
-        sed -i "s/BucketNameSecret/"$GCS_BUCKET"/g" base/ecfront/ecfront-secret.yaml
+        sed -i "s/BucketNameSecret/"$GCS_BUCKET"/g" base/ecfront/ecfront-secret.yaml &&\
+        sed -i "s/_SECRET_KEY_/"$SECRET_KEY_STRING"/g" base/ecpay/ecpay-secret.yaml &&\
+        sed -i "s/_OPERATOR_ADDRESS_/"$OPERATOR_ADDRESS"/g" base/notification/nf-secret.yaml &&\
+        sed -i "s/_SNS_API_KEY_/"$SNS_API_KEY"/g" base/notification/nf-secret.yaml &&\
+        sed -i "s/_SNS_API_URL_/"$SNS_API_URL"/g" base/notification/nf-secret.yaml
     - name: deploy
       run: kubectl apply -k overlays/dev/
