@@ -72,7 +72,13 @@ jobs:
         sed -i "s/_SECRET_KEY_/"$SECRET_KEY_STRING"/g" base/ecpay/ecpay-secret.yaml &&\
         sed -i "s/_OPERATOR_ADDRESS_/"$OPERATOR_ADDRESS"/g" base/notification/nf-secret.yaml &&\
         sed -i "s/_SNS_API_KEY_/"$SNS_API_KEY"/g" base/notification/nf-secret.yaml &&\
-        sed -i "s|_SNS_API_URL_|"$SNS_API_URL"|g" base/notification/nf-secret.yaml
+        sed -i "s|_SNS_API_URL_|"$SNS_API_URL"|g" base/notification/nf-secret.yaml &&\
+        sed -i "s/_REDIS_HOST_WITH_PORT_/"$DEV_REDIS_HOST_WITH_PORT"/g" overlays/dev/common/secret-patch.yaml &&\
+        sed -i "s/_REDIS_HOST_/"$DEV_REDIS_HOST"/g" overlays/dev/common/secret-patch.yaml &&\
+        sed -i "s/_DB_HOST_/"$DEV_DB_HOST"/g" overlays/dev/common/secret-patch.yaml &&\
+        sed -i "s/_DB_PASS_/"$DEV_DB_PASS"/g" overlays/dev/common/secret-patch.yaml &&\
+        sed -i "s/_DB_TABLE_/"$DEV_DB_TABLE"/g" overlays/dev/common/secret-patch.yaml &&\
+        sed -i "s/_DB_USER_/"$DEV_DB_USER"/g" overlays/dev/common/secret-patch.yaml
 
     - name: deploy
       run: kubectl apply -k overlays/dev/
