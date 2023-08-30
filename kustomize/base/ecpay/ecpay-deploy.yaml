@@ -29,22 +29,22 @@ spec:
             valueFrom:
               secretKeyRef:
                 name: common-secret
-                key: host
+                key: db_host
           - name: MysqlDB
             valueFrom:
               secretKeyRef:
                 name: common-secret
-                key: db
+                key: db_table
           - name: MysqlPassword
             valueFrom:
               secretKeyRef:
                 name: common-secret
-                key: password
+                key: db_pass
           - name: MysqlUser
             valueFrom:
               secretKeyRef:
                 name: common-secret
-                key: user
+                key: db_user
           - name: DbHost
             valueFrom:
               configMapKeyRef:
