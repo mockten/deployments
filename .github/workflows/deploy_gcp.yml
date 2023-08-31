@@ -59,6 +59,25 @@ jobs:
         DEV_DB_TABLE: ${{ secrets.DEV_DB_TABLE }}
         DEV_DB_USER: ${{ secrets.DEV_DB_USER }}
       run: |
+        echo "$SERVICE_ACCOUNT_JSON" | cut -c 1-5 &&\
+        echo "$GCS_SA_JSON" | cut -c 1-5 &&\
+        echo "$GCS_BUCKET" | cut -c 1-5 &&\
+        echo "$GCS_BASE_BUCKET" | cut -c 1-5 &&\
+        echo "$GOOGLE_APPLICATION_CRE" | cut -c 1-5 &&\
+        echo "$OPERATION_ADDRESS" | cut -c 1-5 &&\
+        echo "$AUTH0_PROVIDE_URL" | cut -c 1-5 &&\
+        echo "$AUTH0_CLIENT_ID" | cut -c 1-5 &&\
+        echo "$AUTH0_CLIENT_SECRET" | cut -c 1-5 &&\
+        echo "$SECRET_KEY_STRING" | cut -c 1-5 &&\
+        echo "$OPERATOR_ADDRESS" | cut -c 1-5 &&\
+        echo "$SNS_API_KEY" | cut -c 1-5 &&\
+        echo "$SNS_API_URL" | cut -c 1-5 &&\
+        echo "$DEV_REDIS_HOST_WITH_PORT" | cut -c 1-5 &&\
+        echo "$DEV_REDIS_HOST" | cut -c 1-5 &&\
+        echo "$DEV_DB_HOST" | cut -c 1-5 &&\
+        echo "$DEV_DB_PASS" | cut -c 1-5 &&\
+        echo "$DEV_DB_TABLE" | cut -c 1-5 &&\
+        echo "$DEV_DB_USER" | cut -c 1-5 &&\
         sed -i -e "s|_SERVICE_ACCOUNT_JSON_|"$SERVICE_ACCOUNT_JSON"|g" base/common/common-secret.yaml &&\
         sed -i "s/_GCS_BUCKET_/"$GCS_BUCKET"/g" base/ecfront/ecfront-secret.yaml &&\
         sed -i "s/_GCS_BASE_BUCKET_/"$GCS_BASE_BUCKET"/g" base/ecfront/ecfront-secret.yaml &&\
