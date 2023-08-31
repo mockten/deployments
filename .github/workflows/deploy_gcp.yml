@@ -79,6 +79,7 @@ jobs:
         echo "$DEV_DB_TABLE" | cut -c 1-5 &&\
         echo "$DEV_DB_USER" | cut -c 1-5 &&\
         sed -i -e "s|_SERVICE_ACCOUNT_JSON_|"$SERVICE_ACCOUNT_JSON"|g" base/common/common-secret.yaml &&\
+        sed -i -e "s|_GCS_SA_JSON_|"$GCS_SA_JSON"|g" base/common/common-secret.yaml &&\
         sed -i "s/_GCS_BUCKET_/"$GCS_BUCKET"/g" base/ecfront/ecfront-secret.yaml &&\
         sed -i "s/_GCS_BASE_BUCKET_/"$GCS_BASE_BUCKET"/g" base/ecfront/ecfront-secret.yaml &&\
         sed -i "s/_GOOGLE_APPLICATION_CRE_/"$GOOGLE_APPLICATION_CRE"/g" base/ecfront/ecfront-secret.yaml &&\
