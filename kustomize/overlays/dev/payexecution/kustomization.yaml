@@ -22,9 +22,8 @@ configMapGenerator:
 resources:
 - ../../../base/payexecution
 
-
 patches:
 - path: deploy-patch.yaml
   target:
     kind: Deployment
-    name: payexecution
+    name: deploy
