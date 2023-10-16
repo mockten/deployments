@@ -11,6 +11,6 @@ spec:
             secretName: dev-common-secret
             defaultMode: 256
       volumes:
-      - name: mockten-static-file
+      - name: dev-mockten-static-file
         persistentVolumeClaim:
           claimName: ecfront-pvc
