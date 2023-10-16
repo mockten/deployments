@@ -9,5 +9,5 @@ spec:
   accessModes:
     - ReadWriteOnce
   gcePersistentDisk:
-    pdName: dev-static-file-disk
+    pdName: mockten-static-file-disk
     fsType: ext4

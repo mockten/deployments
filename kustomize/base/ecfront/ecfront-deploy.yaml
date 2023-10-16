@@ -13,13 +13,6 @@ spec:
         app: metrics
         department: ecfront
     spec:
-      initContainers:
-      - name: ecfront-init
-        image: centos:centos7
-        command: ['', '-c', 'yum unzip && unzip /mnt/storag/go-portforio-apl-file.zip']
-        volumeMounts:
-        - name: mockten-static-file
-          mountPath: /mnt/storage
       containers:
       - name: ecfront
         image: gcr.io/go-portforio/ecfront
@@ -118,8 +111,12 @@ spec:
             memory: 100m
       securityContext:
         fsGroup: 1000
-      volumes:
-      - gcePersistentDisk:
-          fsType: ext4
-          pdName: dev-static-file-disk
-        name: mockten-static-file
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: topology.kubernetes.io/zone
+                operator: In
+                values:
+                - us-east1-b

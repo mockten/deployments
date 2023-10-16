@@ -12,6 +12,8 @@ replicas:
 
 resources:
 - ../../../base/ecfront
+- pv.yaml
+- pvc.yaml
 
 generatorOptions:
   disableNameSuffixHash: true
