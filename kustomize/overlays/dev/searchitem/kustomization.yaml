@@ -6,7 +6,7 @@ namespace: dev-mockten
 
 images:
 - name: gcr.io/go-portforio/search-item
-  newname: gcr.io/secret-node-394015/searchitem
+  newname: gcr.io/_GCP_PROJECT_ID_/searchitem
   newTag: v0.0.1
 replicas:
 - name: deploy

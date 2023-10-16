@@ -6,7 +6,7 @@ namespace: dev-mockten
 
 images:
 - name: gcr.io/go-portforio/consumer-test
-  newname: gcr.io/secret-node-394015/payexecution
+  newname: gcr.io/_GCP_PROJECT_ID_/payexecution
   newTag: v0.0.1
 replicas:
 - name: deploy

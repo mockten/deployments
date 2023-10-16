@@ -6,7 +6,7 @@ namespace: dev-mockten
 
 images:
 - name: gcr.io/go-portforio/mockten-notification
-  newname: gcr.io/secret-node-394015/notification
+  newname: gcr.io/_GCP_PROJECT_ID_/notification
   newTag: v0.0.1
 replicas:
 - name: deploy

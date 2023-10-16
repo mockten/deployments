@@ -97,7 +97,13 @@ jobs:
         sed -i "s/_DB_HOST_/"$DEV_DB_HOST"/g" overlays/dev/common/secret-patch.yaml &&\
         sed -i "s/_DB_PASS_/"$DEV_DB_PASS"/g" overlays/dev/common/secret-patch.yaml &&\
         sed -i "s/_DB_TABLE_/"$DEV_DB_TABLE"/g" overlays/dev/common/secret-patch.yaml &&\
-        sed -i "s/_DB_USER_/"$DEV_DB_USER"/g" overlays/dev/common/secret-patch.yaml
+        sed -i "s/_DB_USER_/"$DEV_DB_USER"/g" overlays/dev/common/secret-patch.yaml  &&\
+        sed -i "s/_GCP_PROJECT_ID_/"${{ secrets.GCP_PROJECT_ID }}"/g" overlays/dev/ecfront/kustomization.yaml  &&\
+        sed -i "s/_GCP_PROJECT_ID_/"${{ secrets.GCP_PROJECT_ID }}"/g" overlays/dev/ecpay/kustomization.yaml  &&\
+        sed -i "s/_GCP_PROJECT_ID_/"${{ secrets.GCP_PROJECT_ID }}"/g" overlays/dev/notification/kustomization.yaml  &&\
+        sed -i "s/_GCP_PROJECT_ID_/"${{ secrets.GCP_PROJECT_ID }}"/g" overlays/dev/payexecution/kustomization.yaml  &&\
+        sed -i "s/_GCP_PROJECT_ID_/"${{ secrets.GCP_PROJECT_ID }}"/g" overlays/dev/ranking/kustomization.yaml  &&\
+        sed -i "s/_GCP_PROJECT_ID_/"${{ secrets.GCP_PROJECT_ID }}"/g" overlays/dev/searchitem/kustomization.yaml
 
     - name: deploy
       run: kubectl apply -k overlays/dev/
