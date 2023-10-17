@@ -1,0 +1,8 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: mockten-ingress
+  annotations:
+      # kubernetes.io/ingress.allow-http: "false"
+      kubernetes.io/ingress.global-static-ip-name: dev-mockten-ip
+      # ingress.gcp.kubernetes.io/pre-shared-cert: mockten-dev-ssl

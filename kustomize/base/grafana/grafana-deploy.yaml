@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deploy
+spec:
+  selector:
+    matchLabels:
+      app: grafana
+      department: grafana
+  template:
+    metadata:
+      name: grafana
+      labels:
+        app: grafana
+        department: grafana
+    spec:
+      volumes:
+      - name: grafana-config-volume
+        configMap:
+          name: grafana-config
+          items:
+          - key: grafana.ini
+            path: grafana.ini
+      containers:
+      - name: grafana
+        image: grafana/grafana:8.4.0
+        ports:
+        - containerPort: 3000
+        volumeMounts:
+          - name: grafana-config-volume
+            mountPath: /etc/grafana/
+        readinessProbe:
+          httpGet:
+            path: /login
+            port: 3000
+          failureThreshold: 3
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          timeoutSeconds: 3
+        resources:
+          limits:
+            cpu: 200m
+            memory: 200m
+          requests:
+            cpu: 100m
+            memory: 100m

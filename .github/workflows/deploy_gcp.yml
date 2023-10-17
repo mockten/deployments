@@ -1,0 +1,109 @@
+name: deploy_to_gcp
+
+on:
+  push:
+    branches:
+      - main
+      - initial
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch: {}
+
+
+jobs:
+  dev_deploy:
+    if: ${{ github.event_name == 'push' || github.event_name == 'workflow_dispatch' }}
+    runs-on: ubuntu-22.04
+    defaults:
+      run:
+        working-directory: kustomize/
+
+    steps:
+    - name: Checkout the repository
+      uses: actions/checkout@v1
+    - name: GCP Authenticate
+      uses: 'google-github-actions/auth@v1'
+      with:
+        credentials_json: ${{ secrets.GCP_CREDENTIALS }}
+
+    - name: Setup GCloud
+      uses: 'google-github-actions/setup-gcloud@v1'
+      with:
+        version: '>= 363.0.0'
+
+    - name: Configure docker to use the gcloud cli
+      run: |
+        gcloud components install gke-gcloud-auth-plugin && \
+        gcloud container clusters get-credentials mockten-k8s-cluster --region us-east1 --project ${{ secrets.GCP_PROJECT_ID }}
+
+    - name: rename secret value
+      env: 
+        SERVICE_ACCOUNT_JSON: ${{ secrets.SERVICE_ACCOUNT_JSON }}
+        GCS_SA_JSON: ${{ secrets.SERVICE_ACCOUNT_JSON }}
+        GCS_BUCKET: ${{ secrets.GCS_BUCKET }}
+        GCS_BASE_BUCKET: ${{ secrets.GCS_BASE_BUCKET }}
+        GOOGLE_APPLICATION_CRE: ${{ secrets.GOOGLE_APPLICATION_CRE }}
+        OPERATION_ADDRESS: ${{ secrets.OPERATION_ADDRESS }}
+        AUTH0_PROVIDE_URL: ${{ secrets.AUTH0_PROVIDE_URL }}
+        AUTH0_CLIENT_ID: ${{ secrets.AUTH0_CLIENT_ID }}
+        AUTH0_CLIENT_SECRET: ${{ secrets.AUTH0_CLIENT_SECRET }}
+        SECRET_KEY_STRING: ${{ secrets.SECRET_KEY_STRING }}
+        OPERATOR_ADDRESS: ${{ secrets.OPERATOR_ADDRESS }}
+        SNS_API_KEY: ${{ secrets.SNS_API_KEY }}
+        SNS_API_URL: ${{ secrets.SNS_API_URL }}
+        DEV_REDIS_HOST_WITH_PORT: ${{ secrets.DEV_REDIS_HOST_WITH_PORT }}
+        DEV_REDIS_HOST: ${{ secrets.DEV_REDIS_HOST }}
+        DEV_DB_HOST: ${{ secrets.DEV_DB_HOST }}
+        DEV_DB_PASS: ${{ secrets.DEV_DB_PASS }}
+        DEV_DB_TABLE: ${{ secrets.DEV_DB_TABLE }}
+        DEV_DB_USER: ${{ secrets.DEV_DB_USER }}
+      run: |
+        echo "$SERVICE_ACCOUNT_JSON" | cut -c 1-5 &&\
+        echo "$GCS_SA_JSON" | cut -c 1-5 &&\
+        echo "$GCS_BUCKET" | cut -c 1-5 &&\
+        echo "$GCS_BASE_BUCKET" | cut -c 1-5 &&\
+        echo "$GOOGLE_APPLICATION_CRE" | cut -c 1-5 &&\
+        echo "$OPERATION_ADDRESS" | cut -c 1-5 &&\
+        echo "$AUTH0_PROVIDE_URL" | cut -c 1-5 &&\
+        echo "$AUTH0_CLIENT_ID" | cut -c 1-5 &&\
+        echo "$AUTH0_CLIENT_SECRET" | cut -c 1-5 &&\
+        echo "$SECRET_KEY_STRING" | cut -c 1-5 &&\
+        echo "$OPERATOR_ADDRESS" | cut -c 1-5 &&\
+        echo "$SNS_API_KEY" | cut -c 1-5 &&\
+        echo "$SNS_API_URL" | cut -c 1-5 &&\
+        echo "$DEV_REDIS_HOST_WITH_PORT" | cut -c 1-5 &&\
+        echo "$DEV_REDIS_HOST" | cut -c 1-5 &&\
+        echo "$DEV_DB_HOST" | cut -c 1-5 &&\
+        echo "$DEV_DB_PASS" | cut -c 1-5 &&\
+        echo "$DEV_DB_TABLE" | cut -c 1-5 &&\
+        echo "$DEV_DB_USER" | cut -c 1-5 &&\
+        sed -i -e "s|_SERVICE_ACCOUNT_JSON_|"$SERVICE_ACCOUNT_JSON"|g" base/common/common-secret.yaml &&\
+        sed -i -e "s|_GCS_SA_JSON_|"$GCS_SA_JSON"|g" base/common/common-secret.yaml &&\
+        sed -i "s/_GCS_BUCKET_/"$GCS_BUCKET"/g" base/ecfront/ecfront-secret.yaml &&\
+        sed -i "s/_GCS_BASE_BUCKET_/"$GCS_BASE_BUCKET"/g" base/ecfront/ecfront-secret.yaml &&\
+        sed -i "s/_GOOGLE_APPLICATION_CRE_/"$GOOGLE_APPLICATION_CRE"/g" base/ecfront/ecfront-secret.yaml &&\
+        sed -i "s/_OPERATION_ADDRESS_/"$OPERATION_ADDRESS"/g" base/ecfront/ecfront-secret.yaml &&\
+        sed -i "s/_AUTH0_PROVIDE_URL_/"$AUTH0_PROVIDE_URL"/g" base/ecfront/ecfront-secret.yaml &&\
+        sed -i "s/_AUTH0_CLIENT_ID_/"$AUTH0_CLIENT_ID"/g" base/ecfront/ecfront-secret.yaml &&\
+        sed -i "s/_AUTH0_CLIENT_SECRET_/"$AUTH0_CLIENT_SECRET"/g" base/ecfront/ecfront-secret.yaml &&\
+        sed -i "s/BucketNameSecret/"$GCS_BUCKET"/g" base/ecfront/ecfront-secret.yaml &&\
+        sed -i "s/_SECRET_KEY_/"$SECRET_KEY_STRING"/g" base/ecpay/ecpay-secret.yaml &&\
+        sed -i "s/_OPERATOR_ADDRESS_/"$OPERATOR_ADDRESS"/g" base/notification/nf-secret.yaml &&\
+        sed -i "s/_SNS_API_KEY_/"$SNS_API_KEY"/g" base/notification/nf-secret.yaml &&\
+        sed -i "s|_SNS_API_URL_|"$SNS_API_URL"|g" base/notification/nf-secret.yaml &&\
+        sed -i "s/_REDIS_HOST_WITH_PORT_/"$DEV_REDIS_HOST_WITH_PORT"/g" overlays/dev/common/secret-patch.yaml &&\
+        sed -i "s/_REDIS_HOST_/"$DEV_REDIS_HOST"/g" overlays/dev/common/secret-patch.yaml &&\
+        sed -i "s/_DB_HOST_/"$DEV_DB_HOST"/g" overlays/dev/common/secret-patch.yaml &&\
+        sed -i "s/_DB_PASS_/"$DEV_DB_PASS"/g" overlays/dev/common/secret-patch.yaml &&\
+        sed -i "s/_DB_TABLE_/"$DEV_DB_TABLE"/g" overlays/dev/common/secret-patch.yaml &&\
+        sed -i "s/_DB_USER_/"$DEV_DB_USER"/g" overlays/dev/common/secret-patch.yaml  &&\
+        sed -i "s/_GCP_PROJECT_ID_/"${{ secrets.GCP_PROJECT_ID }}"/g" overlays/dev/ecfront/kustomization.yaml  &&\
+        sed -i "s/_GCP_PROJECT_ID_/"${{ secrets.GCP_PROJECT_ID }}"/g" overlays/dev/ecpay/kustomization.yaml  &&\
+        sed -i "s/_GCP_PROJECT_ID_/"${{ secrets.GCP_PROJECT_ID }}"/g" overlays/dev/notification/kustomization.yaml  &&\
+        sed -i "s/_GCP_PROJECT_ID_/"${{ secrets.GCP_PROJECT_ID }}"/g" overlays/dev/payexecution/kustomization.yaml  &&\
+        sed -i "s/_GCP_PROJECT_ID_/"${{ secrets.GCP_PROJECT_ID }}"/g" overlays/dev/ranking/kustomization.yaml  &&\
+        sed -i "s/_GCP_PROJECT_ID_/"${{ secrets.GCP_PROJECT_ID }}"/g" overlays/dev/searchitem/kustomization.yaml
+
+    - name: deploy
+      run: kubectl apply -k overlays/dev/

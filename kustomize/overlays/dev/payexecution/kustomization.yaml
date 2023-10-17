@@ -1,0 +1,29 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namePrefix: dev-
+namespace: dev-mockten
+
+images:
+- name: gcr.io/go-portforio/consumer-test
+  newname: gcr.io/_GCP_PROJECT_ID_/payexecution
+  newTag: v0.0.1
+replicas:
+- name: deploy
+  count: 1
+
+generatorOptions:
+  disableNameSuffixHash: true
+configMapGenerator:
+- name: payexecute-cm
+  envs:
+  - config/payexe.env
+
+resources:
+- ../../../base/payexecution
+
+patches:
+- path: deploy-patch.yaml
+  target:
+    kind: Deployment
+    name: deploy

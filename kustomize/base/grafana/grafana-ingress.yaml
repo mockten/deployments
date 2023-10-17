@@ -1,0 +1,19 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress
+  annotations:
+    kubernetes.io/ingress.allow-http: "false"
+    kubernetes.io/ingress.global-static-ip-name: prd-grafana-ip
+    ingress.gcp.kubernetes.io/pre-shared-cert: grafana-prd-ssl
+spec:
+  rules:
+  - http:
+      paths:
+        - path: /*
+          pathType: ImplementationSpecific
+          backend:
+            service:
+              name: grafana
+              port:
+                number: 3000

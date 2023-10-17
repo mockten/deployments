@@ -1,0 +1,27 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namePrefix: prod-
+namespace: production
+images:
+- name: gcr.io/go-portforio/ecpay
+  newTag: circle-ci
+replicas:
+- name: ecpay
+  count: 1
+
+resources:
+- ../../../base/ecpay
+
+generatorOptions:
+  disableNameSuffixHash: true
+configMapGenerator:
+- name: ecpay-cm
+  envs:
+  - config/ecpay.env
+
+patches:
+- path: secret-patch.yaml
+  target:
+    kind: Secret
+    name: ecpay-secret

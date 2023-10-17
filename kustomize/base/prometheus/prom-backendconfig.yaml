@@ -1,0 +1,13 @@
+apiVersion: cloud.google.com/v1
+kind: BackendConfig
+metadata:
+  name: backendconfig
+spec:
+  healthCheck:
+    checkIntervalSec: 10
+    timeoutSec: 3
+    healthyThreshold: 3
+    unhealthyThreshold: 3
+    type: HTTP
+    requestPath: /graph
+    port: 9090

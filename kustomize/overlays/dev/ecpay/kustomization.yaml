@@ -1,0 +1,22 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namePrefix: dev-
+namespace: dev-mockten
+images:
+- name: gcr.io/go-portforio/ecpay
+  newname: gcr.io/_GCP_PROJECT_ID_/ecpay
+  newTag: v0.0.1
+replicas:
+- name: deploy
+  count: 1
+
+resources:
+- ../../../base/ecpay
+
+generatorOptions:
+  disableNameSuffixHash: true
+configMapGenerator:
+- name: ecpay-cm
+  envs:
+  - config/ecpay.env

@@ -1,0 +1,55 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deploy
+spec:
+  selector:
+    matchLabels:
+      app: payexecution
+  template:
+    metadata:
+      labels:
+        app: payexecution
+    spec:
+      containers:
+      - name: payexecution
+        image: gcr.io/go-portforio/consumer-test
+        command: ["./payexecution","-debug"]
+        env:
+        - name: REDIS_SERVER
+          valueFrom:
+            configMapKeyRef:
+              name: payexecute-cm
+              key: redisserver
+        - name: notifyTaskName
+          valueFrom:
+            configMapKeyRef:
+              name: payexecute-cm
+              key: notifyTaskName
+        - name: queue
+          valueFrom:
+            configMapKeyRef:
+              name: payexecute-cm
+              key: queue
+        - name: notification
+          valueFrom:
+            configMapKeyRef:
+              name: payexecute-cm
+              key: notification
+        - name: transactionFieldName
+          valueFrom:
+            configMapKeyRef:
+              name: payexecute-cm
+              key: transactionFieldName
+        - name: taskName
+          valueFrom:
+            configMapKeyRef:
+              name: payexecute-cm
+              key: taskName
+        resources:
+          limits:
+            cpu: 200m
+            memory: 200m
+          requests:
+            cpu: 100m
+            memory: 100m

@@ -1,0 +1,122 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deploy
+spec:
+  selector:
+    matchLabels:
+      app: metrics
+      department: ecfront
+  template:
+    metadata:
+      labels:
+        app: metrics
+        department: ecfront
+    spec:
+      containers:
+      - name: ecfront
+        image: gcr.io/go-portforio/ecfront
+        args:
+          - chown
+          - -R
+          - sys-user:sys-user
+          - /var/run/secret/cloud.google.com
+        env:
+          - name: GCS_BUCKET_NAME
+            valueFrom:
+              secretKeyRef:
+                name: ecfront-secret
+                key: gcs_bucket
+          - name: GCS_BASE_BUCKET_NAME
+            valueFrom:
+              secretKeyRef:
+                name: ecfront-secret
+                key: gcs_base_bucket        
+          - name: GOOGLE_APPLICATION_CREDENTIALS
+            valueFrom:
+              secretKeyRef:
+                name: ecfront-secret
+                key: google_application_cre
+          - name: OPERATION_ADDRESS
+            valueFrom:
+              secretKeyRef:
+                name: ecfront-secret
+                key: operation_address            
+          - name: Auth0ProvideUrl
+            valueFrom:
+              secretKeyRef:
+                name: ecfront-secret
+                key: Auth0ProvideUrl
+          - name: Auth0ClientId
+            valueFrom:
+              secretKeyRef:
+                name: ecfront-secret
+                key: Auth0ClientId
+          - name: Auth0ClientSecret
+            valueFrom:
+              secretKeyRef:
+                name: ecfront-secret
+                key: Auth0ClientSecret
+          - name: FRONT_BUCKET
+            valueFrom:
+              secretKeyRef:
+                name: ecfront-secret
+                key: BUCKET_NAME
+          - name: REDIS_HOST
+            valueFrom:
+              secretKeyRef:
+                name: common-secret
+                key: redis_host_with_port
+          - name: SEARCHITEM_SERVICE_HOST
+            valueFrom:
+              configMapKeyRef:
+                name: ecfront-cm
+                key: SEARCHITEM_SERVICE_HOST
+          - name: RANKING_SERVICE_HOST
+            valueFrom:
+              configMapKeyRef:
+                name: ecfront-cm
+                key: RANKING_SERVICE_HOST
+          - name: ECPAY_SERVICE_HOST
+            valueFrom:
+              configMapKeyRef:
+                name: ecfront-cm
+                key: ECPAY_SERVICE_HOST      
+        # securityContext:
+        #   privileged: true
+        volumeMounts:
+          - name: cred
+            mountPath: "/var/run/secret/cloud.google.com"
+          - name: mockten-static-file
+            mountPath: /mnt/storage
+        ports:
+          - containerPort: 8080
+            name: ecfront
+          - containerPort: 9100
+            name: prometheus
+        readinessProbe:
+          httpGet:
+            path: /healthcheck
+            port: 8080
+          failureThreshold: 3
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          timeoutSeconds: 3
+        resources:
+          limits:
+            cpu: 200m
+            memory: 200m
+          requests:
+            cpu: 100m
+            memory: 100m
+      securityContext:
+        fsGroup: 1000
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: topology.kubernetes.io/zone
+                operator: In
+                values:
+                - us-east1-b
