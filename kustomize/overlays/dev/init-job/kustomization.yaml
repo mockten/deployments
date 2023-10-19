@@ -1,0 +1,13 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: dev-mockten
+namePrefix: dev-
+
+images:
+- name: gcr.io/go-portforio/static-file
+  newname: gcr.io/_GCP_PROJECT_ID_/static-file
+  newTag: v0.0.1
+
+resources:
+- ../../../base/init-job
