@@ -5,6 +5,7 @@ resources:
 - namespace.yaml
 - namespace-observer.yaml
 - ecfront
+- init-job
 - ecpay
 - notification
 - payexecution
