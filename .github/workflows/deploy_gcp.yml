@@ -58,6 +58,7 @@ jobs:
         DEV_DB_PASS: ${{ secrets.DEV_DB_PASS }}
         DEV_DB_TABLE: ${{ secrets.DEV_DB_TABLE }}
         DEV_DB_USER: ${{ secrets.DEV_DB_USER }}
+        DEV_DB_PRODUCT_VIEWER_PASS: ${{ secrets.DEV_DB_PRODUCT_VIEWER_PASS }}
       run: |
         echo "$SERVICE_ACCOUNT_JSON" | cut -c 1-5 &&\
         echo "$GCS_SA_JSON" | cut -c 1-5 &&\
@@ -78,6 +79,7 @@ jobs:
         echo "$DEV_DB_PASS" | cut -c 1-5 &&\
         echo "$DEV_DB_TABLE" | cut -c 1-5 &&\
         echo "$DEV_DB_USER" | cut -c 1-5 &&\
+        echo "$DEV_DB_PRODUCT_VIEWER_PASS" | cut -c 1-5 &&\
         sed -i -e "s|_SERVICE_ACCOUNT_JSON_|"$SERVICE_ACCOUNT_JSON"|g" base/common/common-secret.yaml &&\
         sed -i -e "s|_GCS_SA_JSON_|"$GCS_SA_JSON"|g" base/common/common-secret.yaml &&\
         sed -i "s/_GCS_BUCKET_/"$GCS_BUCKET"/g" base/ecfront/ecfront-secret.yaml &&\
@@ -98,6 +100,7 @@ jobs:
         sed -i "s/_DB_PASS_/"$DEV_DB_PASS"/g" overlays/dev/common/secret-patch.yaml &&\
         sed -i "s/_DB_TABLE_/"$DEV_DB_TABLE"/g" overlays/dev/common/secret-patch.yaml &&\
         sed -i "s/_DB_USER_/"$DEV_DB_USER"/g" overlays/dev/common/secret-patch.yaml  &&\
+        sed -i "s/_DB_PRODUCT_VIEWER_PASS_/"$DEV_DB_PRODUCT_VIEWER_PASS"/g" overlays/dev/common/secret-patch.yaml  &&\
         sed -i "s/_GCP_PROJECT_ID_/"${{ secrets.GCP_PROJECT_ID }}"/g" overlays/dev/ecfront/kustomization.yaml  &&\
         sed -i "s/_GCP_PROJECT_ID_/"${{ secrets.GCP_PROJECT_ID }}"/g" overlays/dev/ecpay/kustomization.yaml  &&\
         sed -i "s/_GCP_PROJECT_ID_/"${{ secrets.GCP_PROJECT_ID }}"/g" overlays/dev/notification/kustomization.yaml  &&\
@@ -105,6 +108,7 @@ jobs:
         sed -i "s/_GCP_PROJECT_ID_/"${{ secrets.GCP_PROJECT_ID }}"/g" overlays/dev/ranking/kustomization.yaml  &&\
         sed -i "s/_GCP_PROJECT_ID_/"${{ secrets.GCP_PROJECT_ID }}"/g" overlays/dev/searchitem/kustomization.yaml &&\
         sed -i "s/_GCP_PROJECT_ID_/"${{ secrets.GCP_PROJECT_ID }}"/g" overlays/dev/init-job/kustomization.yaml &&\
+        sed -i "s/PRIVATE_KEY_GCS/"${{ secrets.DEV_PRIVATE_KEY_GCS }}"/g" overlays/dev/logstash/secret-patch.yaml &&\
         sed -i "s|_GDRIVE_URL_|"${{ secrets._GDRIVE_URL_ }}"|g" base/init-job/job.yaml
 
     - name: deploy

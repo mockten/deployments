@@ -49,3 +49,24 @@ spec:
           requests:
             cpu: 100m
             memory: 100m
+      - name: meilisearch
+        image: getmeili/meilisearch:v1.4
+        ports:
+        - containerPort: 7700
+          name: meilisearch
+        resources:
+          limits:
+            cpu: 1000m
+            memory: 1000m
+          requests:
+            cpu: 100m
+            memory: 100m
+        volumeMounts:
+        - name: config-volume
+          mountPath: /meili-data/
+        # command: ["./meilisearch", "--config-file-path='./config.toml'"]
+        command: ["./meilisearch"]
+      volumes:
+      - name: config-volume
+        configMap:
+          name: meili-config
