@@ -107,6 +107,7 @@ jobs:
         sed -i "s/_GCP_PROJECT_ID_/"${{ secrets.GCP_PROJECT_ID }}"/g" overlays/dev/payexecution/kustomization.yaml  &&\
         sed -i "s/_GCP_PROJECT_ID_/"${{ secrets.GCP_PROJECT_ID }}"/g" overlays/dev/ranking/kustomization.yaml  &&\
         sed -i "s/_GCP_PROJECT_ID_/"${{ secrets.GCP_PROJECT_ID }}"/g" overlays/dev/searchitem/kustomization.yaml &&\
+        sed -i "s/_GCP_PROJECT_ID_/"${{ secrets.GCP_PROJECT_ID }}"/g" overlays/dev/logstash/kustomization.yaml &&\
         sed -i "s/_GCP_PROJECT_ID_/"${{ secrets.GCP_PROJECT_ID }}"/g" overlays/dev/init-job/kustomization.yaml &&\
         sed -i "s/PRIVATE_KEY_GCS/"${{ secrets.DEV_PRIVATE_KEY_GCS }}"/g" overlays/dev/logstash/secret-patch.yaml &&\
         sed -i "s|_GDRIVE_URL_|"${{ secrets._GDRIVE_URL_ }}"|g" base/init-job/job.yaml

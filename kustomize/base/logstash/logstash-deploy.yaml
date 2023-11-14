@@ -6,7 +6,7 @@ spec:
   template:
     spec:
       containers:
-        - image: docker.elastic.co/logstash/logstash:8.11.0
+        - image: docker.elastic.co/logstash/logstash
           name: logstash
           env:
             - name: REMOTE_DB_HOST

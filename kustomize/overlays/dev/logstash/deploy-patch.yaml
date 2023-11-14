@@ -6,7 +6,6 @@ spec:
   template:
     spec:
       containers:
-        # - image: docker.elastic.co/logstash/logstash:8.11.0
         - name: logstash
           resources:
             limits:
@@ -15,4 +14,3 @@ spec:
             requests:
               cpu: 100m
               memory: 100m
-
