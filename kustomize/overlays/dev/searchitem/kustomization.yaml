@@ -10,7 +10,7 @@ images:
   newTag: v0.0.11
 - name: getmeili/meilisearch
   newname: gcr.io/_GCP_PROJECT_ID_/meilisearch
-  newTag: v0.0.1
+  newTag: v0.0.2
 replicas:
 - name: deploy
   count: 1

@@ -5,6 +5,10 @@ namespace: dev-mockten
 namePrefix: dev-
 
 images:
+- name: docker.elastic.co/logstash/logstash
+  newname: gcr.io/_GCP_PROJECT_ID_/logstash
+  newTag: v0.0.4
+
 replicas:
 - name: deploy
   count: 1
