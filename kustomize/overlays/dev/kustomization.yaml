@@ -6,6 +6,7 @@ resources:
 - namespace-observer.yaml
 - ecfront
 - init-job
+- logstash
 - ecpay
 - notification
 - payexecution
