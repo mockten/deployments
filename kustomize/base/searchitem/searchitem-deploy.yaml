@@ -74,3 +74,4 @@ spec:
           name: meili-config
       - name: meilisearch-data
         emptyDir: {}
+          name: meili-config
