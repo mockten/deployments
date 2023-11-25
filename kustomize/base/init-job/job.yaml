@@ -14,7 +14,3 @@ spec:
         - name: mockten-static-disk
           mountPath: "/mnt/disk"
       restartPolicy: Never
-      volumes:
-      - name: mockten-static-disk
-        persistentVolumeClaim:
-          claimName:  ecfront-pvc
