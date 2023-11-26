@@ -9,10 +9,12 @@ images:
   newTag: "latest"
 replicas:
 - name: deploy
-  count: 1
+  count: 2
 
 resources:
 - ../../../base/mongodb
+- mongo-pv.yaml
+- mongo-pvc.yaml
 
 patches:
 - path: deploy-patch.yaml
@@ -25,7 +27,3 @@ patches:
   target:
     kind: Secret
     name: secret
-- path: init-config-patch.yaml
-  target:
-    kind: ConfigMap
-    name: init-config

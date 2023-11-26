@@ -9,4 +9,3 @@ resources:
 - mongo-deploy.yaml
 - mongo-service.yaml
 - mongo-secret.yaml
-- init-config.yaml

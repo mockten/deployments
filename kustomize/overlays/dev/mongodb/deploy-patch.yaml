@@ -5,18 +5,7 @@ metadata:
 spec:
   template:
     spec:
-      initContainers:
-      - name: init-mongo
-        image: mongo:latest
-        command: ['sh', '-c', 'mongoimport --host localhost --db your_db --collection your_collection --type json --file /data/config/init.json --jsonArray']
-        volumeMounts:
-        - name: mongo-init-config
-          mountPath: /data/config
       volumes:
         - name: mongo-data
-          gcePersistentDisk:
-            pdName: dev-mongodb-disk
-            fsType: ext4
-        - name: mongo-init-config
-          configMap:
-            name: dev-mongo-init-config
+          persistentVolumeClaim:
+            claimName: mongo-pvc
