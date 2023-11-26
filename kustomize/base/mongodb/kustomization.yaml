@@ -6,6 +6,6 @@ commonLabels:
 namePrefix: mongo-
 
 resources:
-- mongo-deploy.yaml
+- mongo-statefulset.yaml
 - mongo-service.yaml
 - mongo-secret.yaml
