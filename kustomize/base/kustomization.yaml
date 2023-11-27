@@ -9,6 +9,7 @@ resources:
 - prometheus
 - ranking
 - searchitem 
+- mongodb
 - redis
 - mysql
 - common

@@ -22,26 +22,11 @@ spec:
           name: prometheus
         command: ["./searchitem"]
         env:
-        - name: SECRET_USER
+        - name: MEILISEARCH_MASTERKEY
           valueFrom:
             secretKeyRef:
-              name: common-secret
-              key: db_user
-        - name: SECRET_PASS
-          valueFrom:
-            secretKeyRef:
-              name: common-secret
-              key: db_pass
-        - name: SECRET_DB
-          valueFrom:
-            secretKeyRef:
-              name: common-secret
-              key: db_host
-        - name: SECRET_TABLE
-          valueFrom:
-            secretKeyRef:
-              name: common-secret
-              key: db_table
+              name: search-secret
+              key: masterkey
         resources:
           limits:
             cpu: 200m
@@ -54,6 +39,12 @@ spec:
         ports:
         - containerPort: 7700
           name: meilisearch
+        env:
+        - name: MEILISEARCH_MASTERKEY
+          valueFrom:
+            secretKeyRef:
+              name: search-secret
+              key: masterkey
         resources:
           limits:
             cpu: 1000m
@@ -67,7 +58,7 @@ spec:
         - name: meili-index
           mountPath: /data/index
         # command: ["./meilisearch", "--config-file-path='./config.toml'"]
-        command: ["./meilisearch"]
+        command: ["./meilisearch", "--master-key=$MEILISEARCH_MASTERKEY"]
       volumes:
       - name: config-volume
         configMap:

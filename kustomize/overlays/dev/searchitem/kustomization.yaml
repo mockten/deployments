@@ -27,3 +27,8 @@ patches:
     version: v1
     kind: StatefulSet
     name: statefulset
+- path: secret-patch.yaml
+  target:
+    version: v1
+    kind: Secret
+    name: secret
