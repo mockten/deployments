@@ -6,7 +6,5 @@ spec:
   clusterIP: None
   ports:
     - protocol: TCP
-      name: app
-      port: 3306
-      targetPort: 3306
-
+      port: 27017
+      targetPort: 27017

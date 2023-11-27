@@ -7,5 +7,5 @@ commonLabels:
 namePrefix: redis-
 
 resources:
-- redis-deploy.yaml
+- redis-statefulset.yaml
 - redis-service.yaml

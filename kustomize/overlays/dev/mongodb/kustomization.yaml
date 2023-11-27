@@ -3,17 +3,19 @@ kind: Kustomization
 
 namespace: dev-mockten
 namePrefix: dev-
+
 images:
-- name: redis
-  newTag: "6.2"
+- name: mongodb
+  newname: gcr.io/_GCP_PROJECT_ID_/mongo
+  newTag: "latest"
 replicas:
 - name: statefulset
   count: 1
 
 resources:
-- ../../../base/redis
-- redis-pv.yaml
-- redis-pvc.yaml
+- ../../../base/mongodb
+- mongo-pv.yaml
+- mongo-pvc.yaml
 
 patches:
 - path: stateful-patch.yaml
@@ -22,3 +24,7 @@ patches:
     version: v1
     kind: StatefulSet
     name: statefulset
+- path: secret-patch.yaml
+  target:
+    kind: Secret
+    name: secret

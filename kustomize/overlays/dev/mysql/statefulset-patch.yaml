@@ -7,7 +7,6 @@ spec:
     spec:
       volumes:
         - name: mysql-persistent-storage
-          gcePersistentDisk:
-            pdName: dev-mysql-disk
-            fsType: ext4
+          persistentVolumeClaim:
+            claimName: mysql-pvc
 

@@ -1,0 +1,11 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: initial-mockten-job
+spec:
+  template:
+    spec:
+      volumes:
+      - name: mockten-static-disk
+        persistentVolumeClaim:
+          claimName:  dev-ecfront-pvc

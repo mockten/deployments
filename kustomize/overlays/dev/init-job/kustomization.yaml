@@ -11,3 +11,11 @@ images:
 
 resources:
 - ../../../base/init-job
+
+patches:
+- path: job-patch.yaml
+  target:
+    group: batch
+    version: v1
+    kind: Job
+    name: initial-mockten-job

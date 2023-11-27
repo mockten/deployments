@@ -4,6 +4,7 @@ metadata:
   name: svc
 spec:
   type: ClusterIP
+  clusterIP: None
   ports:
   - protocol: TCP
     name: app

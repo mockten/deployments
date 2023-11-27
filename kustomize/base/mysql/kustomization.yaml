@@ -6,5 +6,5 @@ commonLabels:
 namePrefix: mysql-
 
 resources:
-- mysql-deploy.yaml
+- mysql-statefulset.yaml
 - mysql-service.yaml
