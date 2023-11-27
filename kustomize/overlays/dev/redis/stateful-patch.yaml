@@ -1,5 +1,5 @@
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
   name: redis
 spec:
@@ -7,7 +7,5 @@ spec:
     spec:
       volumes:
         - name: redis-persistent-storage
-          gcePersistentDisk:
-            pdName: dev-redis-disk
-            fsType: ext4
-
+          persistentVolumeClaim:
+            claimName: redis-pvc

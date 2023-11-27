@@ -7,16 +7,18 @@ images:
 - name: redis
   newTag: "6.2"
 replicas:
-- name: deploy
+- name: statefulset
   count: 1
 
 resources:
 - ../../../base/redis
+- redis-pv.yaml
+- redis-pvc.yaml
 
 patches:
-- path: deploy-patch.yaml
+- path: stateful-patch.yaml
   target:
     group: apps
     version: v1
-    kind: Deployment
-    name: deploy
+    kind: StatefulSet
+    name: statefulset

@@ -12,5 +12,5 @@ configMapGenerator:
   - config/config.toml
 
 resources:
-- searchitem-deploy.yaml
+- searchitem-statefulset.yaml
 - searchitem-service.yaml

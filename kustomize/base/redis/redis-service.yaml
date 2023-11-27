@@ -3,6 +3,7 @@ kind: Service
 metadata:
   name: svc
 spec:
+  clusterIP: None
   selector:
     app: redis
   ports:

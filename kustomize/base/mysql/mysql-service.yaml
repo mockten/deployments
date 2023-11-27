@@ -3,6 +3,7 @@ kind: Service
 metadata:
   name: svc
 spec:
+  clusterIP: None
   ports:
     - protocol: TCP
       name: app

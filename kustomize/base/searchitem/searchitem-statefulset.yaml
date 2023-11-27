@@ -1,12 +1,12 @@
 apiVersion: apps/v1 #  for k8s versions before 1.9.0 use apps/v1beta2  and before 1.8.0 use extensions/v1beta1
-kind: Deployment
+kind: StatefulSet
 metadata:
-  name: deploy
+  name: statefulset
 spec:
-  replicas: 1
   selector:
     matchLabels:
       app: searchitem
+  serviceName: svc
   template:
     metadata:
       labels:
@@ -64,13 +64,20 @@ spec:
         volumeMounts:
         - name: config-volume
           mountPath: /meili-data/
-        - name: meilisearch-data
-          mountPath: /data
+        - name: meili-index
+          mountPath: /data/index
         # command: ["./meilisearch", "--config-file-path='./config.toml'"]
         command: ["./meilisearch"]
       volumes:
       - name: config-volume
         configMap:
           name: meili-config
-      - name: meilisearch-data
-        emptyDir: {}
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: topology.kubernetes.io/zone
+                operator: In
+                values:
+                - us-east1-c
