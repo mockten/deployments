@@ -59,6 +59,7 @@ jobs:
         DEV_DB_TABLE: ${{ secrets.DEV_DB_TABLE }}
         DEV_DB_USER: ${{ secrets.DEV_DB_USER }}
         DEV_DB_PRODUCT_VIEWER_PASS: ${{ secrets.DEV_DB_PRODUCT_VIEWER_PASS }}
+        MEILI_MASTERKEY: ${{ secrets.MEILI_MASTERKEY }}
       run: |
         echo "$SERVICE_ACCOUNT_JSON" | cut -c 1-5 &&\
         echo "$GCS_SA_JSON" | cut -c 1-5 &&\
@@ -101,15 +102,15 @@ jobs:
         sed -i "s/_DB_TABLE_/"$DEV_DB_TABLE"/g" overlays/dev/common/secret-patch.yaml &&\
         sed -i "s/_DB_USER_/"$DEV_DB_USER"/g" overlays/dev/common/secret-patch.yaml  &&\
         sed -i "s/_DB_PRODUCT_VIEWER_PASS_/"$DEV_DB_PRODUCT_VIEWER_PASS"/g" overlays/dev/common/secret-patch.yaml  &&\
+        sed -i "s/_MEILI_MASTERKEY_/"$MEILI_MASTERKEY"/g" overlays/dev/searchitem/secret-patch.yaml  &&\
         sed -i "s/_GCP_PROJECT_ID_/"${{ secrets.GCP_PROJECT_ID }}"/g" overlays/dev/ecfront/kustomization.yaml  &&\
         sed -i "s/_GCP_PROJECT_ID_/"${{ secrets.GCP_PROJECT_ID }}"/g" overlays/dev/ecpay/kustomization.yaml  &&\
         sed -i "s/_GCP_PROJECT_ID_/"${{ secrets.GCP_PROJECT_ID }}"/g" overlays/dev/notification/kustomization.yaml  &&\
         sed -i "s/_GCP_PROJECT_ID_/"${{ secrets.GCP_PROJECT_ID }}"/g" overlays/dev/payexecution/kustomization.yaml  &&\
         sed -i "s/_GCP_PROJECT_ID_/"${{ secrets.GCP_PROJECT_ID }}"/g" overlays/dev/ranking/kustomization.yaml  &&\
+        sed -i "s/_GCP_PROJECT_ID_/"${{ secrets.GCP_PROJECT_ID }}"/g" overlays/dev/mongodb/kustomization.yaml  &&\
         sed -i "s/_GCP_PROJECT_ID_/"${{ secrets.GCP_PROJECT_ID }}"/g" overlays/dev/searchitem/kustomization.yaml &&\
-        sed -i "s/_GCP_PROJECT_ID_/"${{ secrets.GCP_PROJECT_ID }}"/g" overlays/dev/logstash/kustomization.yaml &&\
         sed -i "s/_GCP_PROJECT_ID_/"${{ secrets.GCP_PROJECT_ID }}"/g" overlays/dev/init-job/kustomization.yaml &&\
-        sed -i "s/PRIVATE_KEY_GCS/"${{ secrets.DEV_PRIVATE_KEY_GCS }}"/g" overlays/dev/logstash/secret-patch.yaml &&\
         sed -i "s|_GDRIVE_URL_|"${{ secrets._GDRIVE_URL_ }}"|g" base/init-job/job.yaml
 
     - name: deploy
