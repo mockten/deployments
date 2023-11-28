@@ -6,12 +6,12 @@ resources:
 - namespace-observer.yaml
 - ecfront
 - init-job
-- logstash
 - ecpay
 - notification
 - payexecution
 - ranking
 - searchitem 
+- mongodb
 - redis
 - mysql
 - common
