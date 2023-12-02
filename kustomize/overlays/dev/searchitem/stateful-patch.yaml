@@ -9,3 +9,11 @@ spec:
         - name: meili-index
           persistentVolumeClaim:
             claimName: search-pvc
+      containers:
+      - name: searchitem-app
+        env:
+        - name: MEILISEARCH_MASTERKEY
+          valueFrom:
+            secretKeyRef:
+              key: masterkey
+              name: dev-search-secret
