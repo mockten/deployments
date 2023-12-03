@@ -16,4 +16,4 @@ spec:
           valueFrom:
             secretKeyRef:
               key: masterkey
-              name: dev-search-secret
+              name: dev-searchitem-secret

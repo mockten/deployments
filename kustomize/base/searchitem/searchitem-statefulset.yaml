@@ -25,7 +25,7 @@ spec:
         - name: MEILISEARCH_MASTERKEY
           valueFrom:
             secretKeyRef:
-              name: search-secret
+              name: searchitem-secret
               key: masterkey
         resources:
           limits:
