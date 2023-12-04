@@ -17,3 +17,13 @@ spec:
             secretKeyRef:
               key: masterkey
               name: dev-searchitem-secret
+        - name: DEV_MONGO_SVC_SERVICE_HOST
+          valueFrom:
+            secretKeyRef:
+              key: DEV_MONGO_SVC_SERVICE_HOST
+              name: dev-mongo-svc.dev-mockten.svc.cluster.local
+        - name: DEV_MONGO_SVC_SERVICE_PORT
+          valueFrom:
+            secretKeyRef:
+              key: DEV_MONGO_SVC_SERVICE_PORT
+              name: 27017
