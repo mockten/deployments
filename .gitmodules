@@ -1,0 +1,3 @@
+[submodule "IaC"]
+	path = IaC
+	url = git@github.com:mockten/IaC.git
