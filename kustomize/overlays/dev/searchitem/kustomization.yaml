@@ -17,8 +17,6 @@ replicas:
 
 resources:
 - ../../../base/searchitem
-- search-pv.yaml
-- search-pvc.yaml
 
 patches:
 - path: stateful-patch.yaml

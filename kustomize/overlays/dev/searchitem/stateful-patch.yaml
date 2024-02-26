@@ -17,13 +17,30 @@ spec:
             secretKeyRef:
               key: masterkey
               name: dev-searchitem-secret
-        - name: DEV_MONGO_SVC_SERVICE_HOST
+        - name: MONGO_SVC_SERVICE_HOST
           valueFrom:
             secretKeyRef:
               key: DEV_MONGO_SVC_SERVICE_HOST
-              name: dev-mongo-svc.dev-mockten.svc.cluster.local
-        - name: DEV_MONGO_SVC_SERVICE_PORT
+              name: dev-searchitem-secret
+        - name: MONGO_SVC_SERVICE_PORT
           valueFrom:
             secretKeyRef:
               key: DEV_MONGO_SVC_SERVICE_PORT
-              name: 27017
+              name: dev-searchitem-secret
+        - name: MEILI_SVC
+          valueFrom:
+            secretKeyRef:
+              key: DEV_MEILI_SVC
+              name: dev-searchitem-secret
+        - name: MONGO_USER_DB_NAME
+          value: "product_info"
+        - name: MONGO_USER_COLLECTION_NAME
+          value: "productss"
+  volumeClaimTemplates:
+  - metadata:
+      name: dev-search-pvc
+    spec:
+      accessModes: ["ReadWriteOnce"]
+      resources:
+        requests:
+          storage: 10Gi
