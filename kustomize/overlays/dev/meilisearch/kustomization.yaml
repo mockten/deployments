@@ -1,19 +1,18 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
-namespace: dev-mockten
 namePrefix: dev-
+namespace: dev-mockten
 
 images:
-- name: mongodb
-  # newname: gcr.io/_GCP_PROJECT_ID_/mongo
+- name: getmeili/meilisearch
   newTag: latest
 replicas:
 - name: statefulset
   count: 2
 
 resources:
-- ../../../base/mongodb
+- ../../../base/meilisearch
 
 patches:
 - path: stateful-patch.yaml
@@ -24,5 +23,6 @@ patches:
     name: statefulset
 - path: secret-patch.yaml
   target:
+    version: v1
     kind: Secret
     name: secret

@@ -19,21 +19,21 @@ spec:
             - containerPort: 3306
               name: mysql
           volumeMounts:
-            - name: mysql-persistent-storage
+            - name: dev-mockten-mysql-pvc
               mountPath: /var/lib/mysql
           resources:
             limits:
-              cpu: 200m
-              memory: 200m
+              cpu: 1000m
+              memory: 1000m
             requests:
               cpu: 100m
               memory: 100m
-      affinity:
-        nodeAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-            nodeSelectorTerms:
-            - matchExpressions:
-              - key: topology.kubernetes.io/zone
-                operator: In
-                values:
-                - us-east1-b
+      # affinity:
+      #   nodeAffinity:
+      #     requiredDuringSchedulingIgnoredDuringExecution:
+      #       nodeSelectorTerms:
+      #       - matchExpressions:
+      #         - key: topology.kubernetes.io/zone
+      #           operator: In
+      #           values:
+      #           - us-east1-b

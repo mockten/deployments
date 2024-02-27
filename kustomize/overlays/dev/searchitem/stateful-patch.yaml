@@ -5,12 +5,8 @@ metadata:
 spec:
   template:
     spec:
-      volumes:
-        - name: meili-index
-          persistentVolumeClaim:
-            claimName: search-pvc
       containers:
-      - name: searchitem-app
+      - name: searchitem
         env:
         - name: MEILISEARCH_MASTERKEY
           valueFrom:
@@ -38,7 +34,7 @@ spec:
           value: "productss"
   volumeClaimTemplates:
   - metadata:
-      name: dev-search-pvc
+      name: dev-mockten-search-pvc
     spec:
       accessModes: ["ReadWriteOnce"]
       resources:

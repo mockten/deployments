@@ -13,20 +13,20 @@ spec:
               name: redis
           resources:
             limits:
-              cpu: 200m
-              memory: 200m
+              cpu: 500m
+              memory: 500m
             requests:
               cpu: 100m
               memory: 100m
           volumeMounts:
-            - name: redis-persistent-storage
+            - name: dev-mockten-redis-pvc
               mountPath: /data
-      affinity:
-        nodeAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-            nodeSelectorTerms:
-            - matchExpressions:
-              - key: topology.kubernetes.io/zone
-                operator: In
-                values:
-                - us-east1-b
+      # affinity:
+      #   nodeAffinity:
+      #     requiredDuringSchedulingIgnoredDuringExecution:
+      #       nodeSelectorTerms:
+      #       - matchExpressions:
+      #         - key: topology.kubernetes.io/zone
+      #           operator: In
+      #           values:
+      #           - us-east1-b

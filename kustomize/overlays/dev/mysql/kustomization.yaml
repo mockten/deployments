@@ -5,16 +5,14 @@ namespace: dev-mockten
 namePrefix: dev-
 
 images:
-- name: statefulset
-  newTag: "5.6"
+- name: mysql
+  newTag: latest
 replicas:
 - name: statefulset
-  count: 1
+  count: 2
 
 resources:
 - ../../../base/mysql
-- mysql-pv.yaml
-- mysql-pvc.yaml
 
 patches:
 - path: statefulset-patch.yaml

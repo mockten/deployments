@@ -13,7 +13,7 @@ spec:
         app: searchitem
     spec:
       containers:
-      - name: searchitem-app
+      - name: searchitem
         image: gcr.io/go-portforio/search-item
         ports:
         - containerPort: 50051
@@ -44,3 +44,6 @@ spec:
           requests:
             cpu: 100m
             memory: 100m
+        volumeMounts:
+        - name: dev-mockten-search-pvc
+          mountPath: /data/index

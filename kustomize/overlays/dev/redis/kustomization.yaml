@@ -5,15 +5,13 @@ namespace: dev-mockten
 namePrefix: dev-
 images:
 - name: redis
-  newTag: "6.2"
+  newTag: latest
 replicas:
 - name: statefulset
-  count: 1
+  count: 2
 
 resources:
 - ../../../base/redis
-- redis-pv.yaml
-- redis-pvc.yaml
 
 patches:
 - path: stateful-patch.yaml

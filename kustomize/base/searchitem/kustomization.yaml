@@ -6,11 +6,6 @@ commonLabels:
 
 namePrefix: searchitem-
 
-configMapGenerator:
-- name: meili-config
-  files:
-  - config/config.toml
-
 resources:
 - searchitem-statefulset.yaml
 - searchitem-service.yaml

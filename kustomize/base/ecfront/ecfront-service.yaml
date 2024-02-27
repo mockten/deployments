@@ -4,14 +4,9 @@ metadata:
   name: svc
 spec:
   selector:
-    app: metrics
-    department: ecfront
+    app: ecfront
   ports:
   - protocol: TCP
     name: ecfront
     port: 8080
     targetPort: 8080
-  - protocol: TCP
-    name: nodeexporter
-    port: 9100 
-    targetPort: 9100

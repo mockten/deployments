@@ -4,17 +4,15 @@ kind: Kustomization
 namePrefix: dev-
 namespace: dev-mockten
 images:
-- name: gcr.io/go-portforio/ecfront
-  newname: gcr.io/_GCP_PROJECT_ID_/ecfront
-  newTag: v0.0.1
+- name: gcr.io/go-portforio/ecfront2
+  newname: gcr.io/_GCP_PROJECT_ID_/ecfront2
+  newTag: latest
 replicas:
 - name: deploy
-  count: 1
+  count: 2
 
 resources:
 - ../../../base/ecfront
-- pv.yaml
-- pvc.yaml
 
 generatorOptions:
   disableNameSuffixHash: true
@@ -28,10 +26,10 @@ patches:
   target:
     kind: Ingress
     name: ingress
-- path: service-patch.yaml
-  target:
-    kind: Service
-    name: svc
+# - path: service-patch.yaml
+#   target:
+#     kind: Service
+#     name: svc
 - path: deploy-patch.yaml
   target:
     group: apps
