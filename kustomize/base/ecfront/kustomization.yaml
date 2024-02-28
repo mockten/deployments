@@ -7,7 +7,6 @@ commonLabels:
 namePrefix: ecfront-
 
 resources:
-- ecfront-backendconfig.yaml
 - ecfront-deploy.yaml
 - ecfront-ingress.yaml
 - ecfront-secret.yaml

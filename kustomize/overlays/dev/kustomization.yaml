@@ -12,6 +12,7 @@ resources:
 - ranking
 - searchitem 
 - mongodb
+- meilisearch
 - redis
 - mysql
 - common

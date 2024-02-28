@@ -5,17 +5,15 @@ namespace: dev-mockten
 namePrefix: dev-
 
 images:
-- name: mongodb
-  newname: gcr.io/_GCP_PROJECT_ID_/mongo
-  newTag: v0.0.2
+- name: mongo
+  # newname: gcr.io/_GCP_PROJECT_ID_/mongo
+  newTag: latest
 replicas:
 - name: statefulset
-  count: 1
+  count: 2
 
 resources:
 - ../../../base/mongodb
-- mongo-pv.yaml
-- mongo-pvc.yaml
 
 patches:
 - path: stateful-patch.yaml

@@ -3,10 +3,11 @@ kind: Deployment
 metadata:
   name: mysql
 spec:
-  template:
+  volumeClaimTemplates:
+  - metadata:
+      name: dev-mockten-mysql-pvc
     spec:
-      volumes:
-        - name: mysql-persistent-storage
-          persistentVolumeClaim:
-            claimName: mysql-pvc
-
+      accessModes: ["ReadWriteOnce"]
+      resources:
+        requests:
+          storage: 10Gi

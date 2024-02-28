@@ -5,22 +5,15 @@ metadata:
 spec:
   selector:
     matchLabels:
-      app: metrics
-      department: ecfront
+      app: ecfront
   template:
     metadata:
       labels:
-        app: metrics
-        department: ecfront
+        app: ecfront
     spec:
       containers:
       - name: ecfront
-        image: gcr.io/go-portforio/ecfront
-        args:
-          - chown
-          - -R
-          - sys-user:sys-user
-          - /var/run/secret/cloud.google.com
+        image: gcr.io/go-portforio/ecfront2
         env:
           - name: GCS_BUCKET_NAME
             valueFrom:
@@ -82,41 +75,21 @@ spec:
               configMapKeyRef:
                 name: ecfront-cm
                 key: ECPAY_SERVICE_HOST      
-        # securityContext:
-        #   privileged: true
-        volumeMounts:
-          - name: cred
-            mountPath: "/var/run/secret/cloud.google.com"
-          - name: mockten-static-file
-            mountPath: /mnt/storage
         ports:
-          - containerPort: 8080
-            name: ecfront
-          - containerPort: 9100
-            name: prometheus
+          - containerPort: 80
+            name: main
         readinessProbe:
           httpGet:
-            path: /healthcheck
-            port: 8080
+            path: /
+            port: 80
           failureThreshold: 3
           initialDelaySeconds: 30
           periodSeconds: 10
           timeoutSeconds: 3
         resources:
           limits:
-            cpu: 200m
-            memory: 200m
+            cpu: 500m
+            memory: 500m
           requests:
             cpu: 100m
             memory: 100m
-      securityContext:
-        fsGroup: 1000
-      affinity:
-        nodeAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-            nodeSelectorTerms:
-            - matchExpressions:
-              - key: topology.kubernetes.io/zone
-                operator: In
-                values:
-                - us-east1-b

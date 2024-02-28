@@ -13,7 +13,7 @@ spec:
         app: searchitem
     spec:
       containers:
-      - name: searchitem-app
+      - name: searchitem
         image: gcr.io/go-portforio/search-item
         ports:
         - containerPort: 50051
@@ -27,42 +27,23 @@ spec:
             secretKeyRef:
               name: searchitem-secret
               key: masterkey
+        - name: MONGO_INITDB_ROOT_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: searchitem-secret
+              key: mongo_init_username
+        - name: MONGO_INITDB_ROOT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: searchitem-secret
+              key: mongo_init_password
         resources:
           limits:
-            cpu: 200m
-            memory: 200m
-          requests:
-            cpu: 100m
-            memory: 100m
-      - name: meilisearch
-        image: getmeili/meilisearch
-        ports:
-        - containerPort: 7700
-          name: meilisearch
-        resources:
-          limits:
-            cpu: 1000m
-            memory: 1000m
+            cpu: 500m
+            memory: 500m
           requests:
             cpu: 100m
             memory: 100m
         volumeMounts:
-        - name: config-volume
-          mountPath: /meili-data/
-        - name: meili-index
+        - name: dev-mockten-search-pvc
           mountPath: /data/index
-        # command: ["./meilisearch", "--config-file-path='./config.toml'"]
-        command: ["./meilisearch", "--master-key=$MEILISEARCH_MASTERKEY"]
-      volumes:
-      - name: config-volume
-        configMap:
-          name: meili-config
-      affinity:
-        nodeAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-            nodeSelectorTerms:
-            - matchExpressions:
-              - key: topology.kubernetes.io/zone
-                operator: In
-                values:
-                - us-east1-c

@@ -4,12 +4,3 @@ metadata:
   name: ecfront
 spec:
   template:
-    spec:
-      volumes:
-        - name: cred
-          secret:
-            secretName: dev-common-secret
-            defaultMode: 256
-        - name: mockten-static-file
-          persistentVolumeClaim:
-            claimName: ecfront-pvc
