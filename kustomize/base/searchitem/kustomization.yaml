@@ -7,6 +7,6 @@ commonLabels:
 namePrefix: searchitem-
 
 resources:
-- searchitem-statefulset.yaml
+- searchitem-stateful.yaml
 - searchitem-service.yaml
 - searchitem-secret.yaml

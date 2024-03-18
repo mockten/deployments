@@ -14,29 +14,13 @@ spec:
     spec:
       containers:
       - name: searchitem
-        image: gcr.io/go-portforio/search-item
+        image: repository/searchitem
         ports:
         - containerPort: 50051
           name: apl
         - containerPort: 9100
-          name: prometheus
+          name: metrics
         command: ["./searchitem"]
-        env:
-        - name: MEILISEARCH_MASTERKEY
-          valueFrom:
-            secretKeyRef:
-              name: searchitem-secret
-              key: masterkey
-        - name: MONGO_INITDB_ROOT_USERNAME
-          valueFrom:
-            secretKeyRef:
-              name: searchitem-secret
-              key: mongo_init_username
-        - name: MONGO_INITDB_ROOT_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: searchitem-secret
-              key: mongo_init_password
         resources:
           limits:
             cpu: 500m

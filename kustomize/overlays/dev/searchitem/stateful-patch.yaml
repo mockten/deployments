@@ -28,6 +28,16 @@ spec:
             secretKeyRef:
               key: DEV_MEILI_SVC
               name: dev-searchitem-secret
+        - name: MONGO_INITDB_ROOT_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: dev-searchitem-secret
+              key: mongo_init_username
+        - name: MONGO_INITDB_ROOT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: dev-searchitem-secret
+              key: mongo_init_password
         - name: MONGO_USER_DB_NAME
           value: "product_info"
         - name: MONGO_USER_COLLECTION_NAME

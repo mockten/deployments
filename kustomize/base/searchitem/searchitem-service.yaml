@@ -11,7 +11,7 @@ spec:
     port: 50051
     targetPort: 50051
   - protocol: TCP
-    name: nodeexporter
+    name: metrics
     port: 9100
     targetPort: 9100
   selector:
