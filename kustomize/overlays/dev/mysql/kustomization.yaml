@@ -21,3 +21,7 @@ patches:
     version: v1
     kind: StatefulSet
     name: statefulset
+- path: secret-patch.yaml
+  target:
+    kind: Secret
+    name: mysql-secret
