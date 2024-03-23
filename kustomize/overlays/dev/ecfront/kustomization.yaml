@@ -5,7 +5,8 @@ namePrefix: dev-
 namespace: dev-mockten
 images:
 - name: gcr.io/go-portforio/ecfront2
-  newname: gcr.io/_GCP_PROJECT_ID_/ecfront2
+  # newname: gcr.io/_GCP_PROJECT_ID_/ecfront2
+  newname: gcr.io/planar-courage-414205/mockten/ecfront
   newTag: latest
 replicas:
 - name: deploy

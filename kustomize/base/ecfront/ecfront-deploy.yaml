@@ -59,22 +59,7 @@ spec:
             valueFrom:
               secretKeyRef:
                 name: common-secret
-                key: redis_host_with_port
-          - name: SEARCHITEM_SERVICE_HOST
-            valueFrom:
-              configMapKeyRef:
-                name: ecfront-cm
-                key: SEARCHITEM_SERVICE_HOST
-          - name: RANKING_SERVICE_HOST
-            valueFrom:
-              configMapKeyRef:
-                name: ecfront-cm
-                key: RANKING_SERVICE_HOST
-          - name: ECPAY_SERVICE_HOST
-            valueFrom:
-              configMapKeyRef:
-                name: ecfront-cm
-                key: ECPAY_SERVICE_HOST      
+                key: redis_host_with_port     
         ports:
           - containerPort: 80
             name: main

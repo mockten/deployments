@@ -5,12 +5,9 @@ namePrefix: dev-
 namespace: dev-mockten
 
 images:
-- name: gcr.io/go-portforio/search-item
-  newname: gcr.io/_GCP_PROJECT_ID_/searchitem
-  newTag: v0.0.17
-- name: getmeili/meilisearch
-  newname: gcr.io/_GCP_PROJECT_ID_/meilisearch
-  newTag: v0.0.2
+- name: repository/searchitem
+  newname: gcr.io/planar-courage-414205/mockten/searchitem
+  newTag: latest
 replicas:
 - name: statefulset
   count: 1

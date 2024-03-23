@@ -8,3 +8,4 @@ namePrefix: mysql-
 resources:
 - mysql-statefulset.yaml
 - mysql-service.yaml
+- mysql-secret.yaml
