@@ -5,7 +5,7 @@ namespace: dev-mockten
 namePrefix: dev-
 
 images:
-- name: mongo
+- name: gcr.io/planar-courage-414205/mockten/mongodb
   # newname: gcr.io/_GCP_PROJECT_ID_/mongo
   newTag: latest
 replicas:
