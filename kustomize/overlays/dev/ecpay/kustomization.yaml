@@ -4,8 +4,8 @@ kind: Kustomization
 namePrefix: dev-
 namespace: dev-mockten
 images:
-- name: gcr.io/go-portforio/ecpay
-  newname: gcr.io/_GCP_PROJECT_ID_/ecpay
+- name: mockten/ecpay
+  newname: gcr.io/_GCP_PROJECT_ID_/mockten/ecpay
   newTag: v0.0.1
 replicas:
 - name: deploy

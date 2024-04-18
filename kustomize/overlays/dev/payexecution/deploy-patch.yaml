@@ -10,7 +10,7 @@ spec:
     spec:
       containers:
       - name: payexecution
-        image: gcr.io/go-portforio/consumer-test
+        image: mockten/payexecution
         env:
         - name: SECRET_USER
           valueFrom:

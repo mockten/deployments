@@ -5,8 +5,8 @@ namePrefix: dev-
 namespace: dev-mockten
 
 images:
-- name: gcr.io/go-portforio/ranking
-  newname: gcr.io/_GCP_PROJECT_ID_/ranking
+- name: mockten/ranking
+  newname: gcr.io/_GCP_PROJECT_ID_/mockten/ranking
   newTag: v0.0.1
 replicas:
 - name: deploy

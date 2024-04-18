@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: searchitem
-        image: repository/searchitem
+        image: mockten/searchitem
         ports:
         - containerPort: 50051
           name: apl
