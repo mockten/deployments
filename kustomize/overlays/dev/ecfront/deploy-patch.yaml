@@ -1,6 +1,22 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ecfront
+  name: deploy
 spec:
+  selector:
+    matchLabels:
+      app: ecfront
   template:
+    metadata:
+      labels:
+        app: ecfront
+    spec:
+      containers:
+      - name: ecfront
+        resources:
+          limits:
+            cpu: 500m
+            memory: 500m
+          requests:
+            cpu: 100m
+            memory: 100m

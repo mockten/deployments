@@ -13,7 +13,7 @@ spec:
     spec:
       containers:
       - name: payexecution
-        image: gcr.io/go-portforio/consumer-test
+        image: mockten/payexecution
         command: ["./payexecution","-debug"]
         env:
         - name: REDIS_SERVER

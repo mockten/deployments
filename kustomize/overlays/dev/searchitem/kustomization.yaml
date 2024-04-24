@@ -5,8 +5,8 @@ namePrefix: dev-
 namespace: dev-mockten
 
 images:
-- name: repository/searchitem
-  newname: gcr.io/planar-courage-414205/mockten/searchitem
+- name: mockten/searchitem
+  newname: gcr.io/_GCP_PROJECT_ID_/mockten/searchitem
   newTag: latest
 replicas:
 - name: statefulset

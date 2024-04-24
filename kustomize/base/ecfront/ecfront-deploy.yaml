@@ -13,53 +13,7 @@ spec:
     spec:
       containers:
       - name: ecfront
-        image: gcr.io/go-portforio/ecfront2
-        env:
-          - name: GCS_BUCKET_NAME
-            valueFrom:
-              secretKeyRef:
-                name: ecfront-secret
-                key: gcs_bucket
-          - name: GCS_BASE_BUCKET_NAME
-            valueFrom:
-              secretKeyRef:
-                name: ecfront-secret
-                key: gcs_base_bucket        
-          - name: GOOGLE_APPLICATION_CREDENTIALS
-            valueFrom:
-              secretKeyRef:
-                name: ecfront-secret
-                key: google_application_cre
-          - name: OPERATION_ADDRESS
-            valueFrom:
-              secretKeyRef:
-                name: ecfront-secret
-                key: operation_address            
-          - name: Auth0ProvideUrl
-            valueFrom:
-              secretKeyRef:
-                name: ecfront-secret
-                key: Auth0ProvideUrl
-          - name: Auth0ClientId
-            valueFrom:
-              secretKeyRef:
-                name: ecfront-secret
-                key: Auth0ClientId
-          - name: Auth0ClientSecret
-            valueFrom:
-              secretKeyRef:
-                name: ecfront-secret
-                key: Auth0ClientSecret
-          - name: FRONT_BUCKET
-            valueFrom:
-              secretKeyRef:
-                name: ecfront-secret
-                key: BUCKET_NAME
-          - name: REDIS_HOST
-            valueFrom:
-              secretKeyRef:
-                name: common-secret
-                key: redis_host_with_port     
+        image: mockten/ecfront2
         ports:
           - containerPort: 80
             name: main
@@ -71,10 +25,3 @@ spec:
           initialDelaySeconds: 30
           periodSeconds: 10
           timeoutSeconds: 3
-        resources:
-          limits:
-            cpu: 500m
-            memory: 500m
-          requests:
-            cpu: 100m
-            memory: 100m

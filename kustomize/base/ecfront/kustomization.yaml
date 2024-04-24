@@ -9,5 +9,4 @@ namePrefix: ecfront-
 resources:
 - ecfront-deploy.yaml
 - ecfront-ingress.yaml
-- ecfront-secret.yaml
 - ecfront-service.yaml

@@ -13,7 +13,7 @@ spec:
     spec:
       containers:
       - name: ranking
-        image: gcr.io/go-portforio/ranking
+        image: mockten/ranking
         env:
           - name: REDIS_HOST
             valueFrom:
