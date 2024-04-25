@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deploy
+spec:
+  selector:
+    matchLabels:
+      app: adder
+  template:
+    metadata:
+      labels:
+        app: adder
+    spec:
+      containers:
+      - name: adder
+        env:
+        - name: MONGO_SVC_SERVICE_HOST
+          valueFrom:
+            secretKeyRef:
+              key: DEV_MONGO_SVC_SERVICE_HOST
+              name: dev-adder-secret
+        - name: MONGO_SVC_SERVICE_PORT
+          valueFrom:
+            secretKeyRef:
+              key: DEV_MONGO_SVC_SERVICE_PORT
+              name: dev-adder-secret
+        - name: MONGO_INITDB_ROOT_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: dev-adder-secret
+              key: mongo_init_username
+        - name: MONGO_INITDB_ROOT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: dev-adder-secret
+              key: mongo_init_password
+        - name: MONGO_USER_DB_NAME
+          value: "product_info"
+        - name: MONGO_USER_COLLECTION_NAME
+          value: "productss"
+        - name: MOCKTEN_ENV
+          value: "development"
+        resources:
+          limits:
+            cpu: 300m
+            memory: 300m
+          requests:
+            cpu: 100m
+            memory: 100m
