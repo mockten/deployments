@@ -5,7 +5,8 @@ namePrefix: dev-
 namespace: dev-mockten
 images:
 - name: mockten/ecfront2
-  newname: gcr.io/_GCP_PROJECT_ID_/mockten/ecfront
+  # newname: gcr.io/_GCP_PROJECT_ID_/mockten/ecfront
+  newname: gcr.io/planar-courage-414205/mockten/ecfront
   newTag: latest
 replicas:
 - name: deploy
@@ -13,6 +14,11 @@ replicas:
 
 resources:
 - ../../../base/ecfront
+
+configMapGenerator:
+- name: ecfront-nginx-conf
+  files:
+    - nginx.conf
 
 patches:
 - path: ingress-patch.yaml
