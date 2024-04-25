@@ -8,5 +8,5 @@ spec:
   ports:
   - protocol: TCP
     name: ecfront
-    port: 8080
-    targetPort: 8080
+    port: 80
+    targetPort: 80
