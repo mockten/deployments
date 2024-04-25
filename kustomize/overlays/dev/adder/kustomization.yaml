@@ -6,8 +6,7 @@ namespace: dev-mockten
 
 images:
 - name: mockten/adder
-  # newname: gcr.io/_GCP_PROJECT_ID_/mockten/adder
-  newname: gcr.io/planar-courage-414205/mockten/adder
+  newname: gcr.io/_GCP_PROJECT_ID_/mockten/adder
   newTag: latest
 replicas:
 - name: deploy
