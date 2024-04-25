@@ -54,6 +54,7 @@ jobs:
         sed -i "s/_SNS_API_KEY_/"$SNS_API_KEY"/g" base/notification/nf-secret.yaml &&\
         sed -i "s|_SNS_API_URL_|"$SNS_API_URL"|g" base/notification/nf-secret.yaml &&\
         sed -i "s/_MEILI_MASTERKEY_/"$MEILI_MASTERKEY"/g" overlays/dev/searchitem/secret-patch.yaml  &&\
+        sed -i "s/_GCP_PROJECT_ID_/"${{ secrets.GCP_PROJECT_ID }}"/g" overlays/dev/adder/kustomization.yaml  &&\
         sed -i "s/_GCP_PROJECT_ID_/"${{ secrets.GCP_PROJECT_ID }}"/g" overlays/dev/ecfront/kustomization.yaml  &&\
         sed -i "s/_GCP_PROJECT_ID_/"${{ secrets.GCP_PROJECT_ID }}"/g" overlays/dev/ecpay/kustomization.yaml  &&\
         sed -i "s/_GCP_PROJECT_ID_/"${{ secrets.GCP_PROJECT_ID }}"/g" overlays/dev/notification/kustomization.yaml  &&\

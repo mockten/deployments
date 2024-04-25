@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deploy
+spec:
+  selector:
+    matchLabels:
+      app: adder
+  template:
+    metadata:
+      labels:
+        app: adder
+    spec:
+      containers:
+      - name: adder
+        image: mockten/adder
+        ports:
+        - containerPort: 50051
+          name: app
+        - containerPort: 9100
+          name: prometheus
+        resources:
+          limits:
+            cpu: 200m
+            memory: 200m
+          requests:
+            cpu: 100m
+            memory: 100m

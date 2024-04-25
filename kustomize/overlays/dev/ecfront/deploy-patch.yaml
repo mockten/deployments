@@ -20,3 +20,15 @@ spec:
           requests:
             cpu: 100m
             memory: 100m
+        volumeMounts:
+        - name: config-volume
+          mountPath: /etc/nginx/nginx.conf
+          subPath: nginx.conf
+          readOnly: true
+      volumes:
+      - name: config-volume
+        configMap:
+          name: ecfront-nginx-conf
+          items:
+          - key: nginx.conf
+            path: nginx.conf
